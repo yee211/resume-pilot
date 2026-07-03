@@ -129,7 +129,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import api from '../api'
 
 const router = useRouter()
 
@@ -196,7 +196,7 @@ onMounted(() => {
 async function loadHistory() {
   loading.value = true
   try {
-    const res = await axios.get('/history/all')
+    const res = await api.get('/history/all')
     const data = res.data.data
     atsRecords.value = data.ats || []
     jdRecords.value = data.jd || []

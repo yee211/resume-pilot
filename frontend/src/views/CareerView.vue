@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 interface Resume {
   id: number
@@ -95,7 +95,7 @@ onMounted(() => {
 
 async function loadResumes() {
   try {
-    const res = await axios.get('/resume/my')
+    const res = await api.get('/resume/my')
     resumes.value = res.data.data
   } catch (e) {
     console.error('加载简历失败', e)
@@ -109,7 +109,7 @@ async function generate() {
   result.value = null
 
   try {
-    const res = await axios.post('/career/generate', {
+    const res = await api.post('/career/generate', {
       resumeId: Number(form.value.resumeId),
       jobTitle: form.value.jobTitle || undefined,
       company: form.value.company || undefined

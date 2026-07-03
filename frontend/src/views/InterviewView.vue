@@ -131,7 +131,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
-import axios from 'axios'
+import api from '../api'
 
 interface Resume {
   id: number
@@ -187,7 +187,7 @@ onMounted(() => {
 
 async function loadResumes() {
   try {
-    const res = await axios.get('/resume/my')
+    const res = await api.get('/resume/my')
     resumes.value = res.data.data
   } catch (e) {
     console.error('加载简历失败', e)
@@ -196,7 +196,7 @@ async function loadResumes() {
 
 async function loadHistory() {
   try {
-    const res = await axios.get('/interview/my')
+    const res = await api.get('/interview/my')
     history.value = res.data.data
   } catch (e) {
     console.error('加载历史失败', e)
@@ -208,7 +208,7 @@ async function startInterview() {
 
   loading.value = true
   try {
-    const res = await axios.post('/interview/start', {
+    const res = await api.post('/interview/start', {
       resumeId: Number(form.value.resumeId),
       jobTitle: form.value.jobTitle || undefined,
       company: form.value.company || undefined
@@ -241,7 +241,7 @@ async function submitAnswer() {
   loading.value = true
 
   try {
-    const res = await axios.post(`/interview/${currentSession.value.id}/answer`, null, {
+    const res = await api.post(`/interview/${currentSession.value.id}/answer`, null, {
       params: { answer }
     })
 
@@ -267,7 +267,7 @@ async function submitAnswer() {
 
 async function loadInterview(id: number) {
   try {
-    const res = await axios.get(`/interview/${id}`)
+    const res = await api.get(`/interview/${id}`)
     currentSession.value = res.data.data
     messages.value = []
 
