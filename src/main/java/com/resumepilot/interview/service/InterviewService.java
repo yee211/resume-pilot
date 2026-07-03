@@ -70,7 +70,7 @@ public class InterviewService extends ServiceImpl<InterviewSessionMapper, Interv
 
         // 1. 获取简历内容
         Resume resume = resumeService.getById(request.getResumeId());
-        if (resume == null || resume.getContent() == null) {
+        if (resume == null || resume.getRawText() == null) {
             throw new BusinessException(ResultCode.RESUME_NOT_FOUND, "简历不存在或内容为空");
         }
 
@@ -87,7 +87,7 @@ public class InterviewService extends ServiceImpl<InterviewSessionMapper, Interv
 
         // 3. 生成第一题
         String memoryId = "interview-" + userId + "-" + session.getId();
-        String prompt = buildStartPrompt(resume.getContent(), session.getJobTitle(), session.getCompany());
+        String prompt = buildStartPrompt(resume.getRawText(), session.getJobTitle(), session.getCompany());
         String firstQuestion = interviewAgent.interview(memoryId, prompt);
 
         // 4. 保存第一题

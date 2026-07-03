@@ -49,14 +49,14 @@ public class CareerService {
     public CareerVO generate(CareerRequest request) {
         // 1. 获取简历内容
         Resume resume = resumeService.getById(request.getResumeId());
-        if (resume == null || resume.getContent() == null) {
+        if (resume == null || resume.getRawText() == null) {
             throw new BusinessException(ResultCode.RESUME_NOT_FOUND, "简历不存在或内容为空");
         }
 
         // 2. 构建 Prompt
         String prompt = careerPromptTemplate.apply(
                 Map.of(
-                        "resume", resume.getContent(),
+                        "resume", resume.getRawText(),
                         "jobTitle", request.getJobTitle() != null ? request.getJobTitle() : "软件开发工程师",
                         "company", request.getCompany() != null ? request.getCompany() : "互联网公司"
                 )

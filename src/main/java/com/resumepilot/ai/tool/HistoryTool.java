@@ -72,9 +72,11 @@ public class HistoryTool {
         sb.append("JD 匹配历史：\n");
         for (JdVO record : records) {
             sb.append("- ID: ").append(record.getId())
-              .append(", 职位: ").append(record.getJdTitle())
-              .append(", 匹配度: ").append(record.getMatchScore())
-              .append("%\n");
+              .append(", 状态: ").append(record.getStatus() == 1 ? "已完成" : "进行中");
+            if (record.getResult() != null) {
+                sb.append(", 匹配度: ").append(record.getResult().getMatchScore()).append("%");
+            }
+            sb.append("\n");
         }
         return sb.toString();
     }
