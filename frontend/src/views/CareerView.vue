@@ -13,7 +13,7 @@
           <select v-model="form.resumeId" class="form-select">
             <option value="" disabled>请选择简历</option>
             <option v-for="resume in resumes" :key="resume.id" :value="resume.id">
-              {{ resume.title }}
+              {{ resume.fileName }}
             </option>
           </select>
         </div>
@@ -62,7 +62,7 @@ import axios from 'axios'
 
 interface Resume {
   id: number
-  title: string
+  fileName: string
 }
 
 interface CareerResult {
