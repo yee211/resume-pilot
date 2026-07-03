@@ -67,24 +67,24 @@
       <div v-else-if="activeTab === 'jd'" class="record-list">
         <div v-for="item in currentList" :key="item.id" class="record-card">
           <div class="record-header">
-            <span class="record-title">{{ item.jdTitle || 'JD 匹配' }}</span>
+            <span class="record-title">JD 匹配 #{{ item.id }}</span>
             <span class="record-time">{{ formatTime(item.createdAt) }}</span>
           </div>
           <div class="record-body">
             <div class="score-display">
-              <span class="score" :class="getScoreClass(item.matchScore)">
-                {{ item.matchScore || '-' }}
+              <span class="score" :class="getScoreClass(item.result?.matchScore)">
+                {{ item.result?.matchScore || '-' }}
               </span>
               <span class="score-label">匹配度</span>
             </div>
-            <div class="keywords" v-if="item.matchedKeywords">
-              <div class="keyword-section">
+            <div class="keywords" v-if="item.result">
+              <div class="keyword-section" v-if="item.result.matchedSkills">
                 <span class="label">✅ 匹配：</span>
-                <span class="keywords-list">{{ item.matchedKeywords.join(', ') }}</span>
+                <span class="keywords-list">{{ item.result.matchedSkills.join(', ') }}</span>
               </div>
-              <div class="keyword-section" v-if="item.missingKeywords">
+              <div class="keyword-section" v-if="item.result.missingSkills">
                 <span class="label">❌ 缺失：</span>
-                <span class="keywords-list">{{ item.missingKeywords.join(', ') }}</span>
+                <span class="keywords-list">{{ item.result.missingSkills.join(', ') }}</span>
               </div>
             </div>
           </div>
@@ -142,10 +142,15 @@ interface AtsRecord {
 
 interface JdRecord {
   id: number
-  jdTitle: string
-  matchScore: number
-  matchedKeywords: string[]
-  missingKeywords: string[]
+  jdText: string
+  status: number
+  result: {
+    matchScore: number
+    matchedSkills: string[]
+    missingSkills: string[]
+    suggestions: string[]
+    summary: string
+  } | null
   createdAt: string
 }
 
