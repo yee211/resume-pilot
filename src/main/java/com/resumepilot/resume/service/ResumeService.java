@@ -129,6 +129,20 @@ public class ResumeService extends ServiceImpl<ResumeMapper, Resume> {
         return list.stream().map(this::toVO).toList();
     }
 
+    /**
+     * 根据用户 ID 查询简历列表（供 Tool 调用）
+     *
+     * @param userId 用户 ID
+     * @return 简历实体列表
+     */
+    public List<Resume> listByUserId(Long userId) {
+        return this.list(
+                new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<Resume>()
+                        .eq(Resume::getUserId, userId)
+                        .orderByDesc(Resume::getCreatedAt)
+        );
+    }
+
     // ========== 私有方法 ==========
 
     private void validateFile(MultipartFile file) {

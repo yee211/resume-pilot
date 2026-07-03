@@ -29,7 +29,7 @@ public class ResumeTool {
      *
      * @return 简历列表（JSON 格式）
      */
-    @Tool("获取当前用户的所有简历列表，返回简历ID、标题、创建时间等信息")
+    @Tool("获取当前用户的所有简历列表，返回简历ID、文件名、状态等信息")
     public String listMyResumes() {
         Long userId = userService.getCurrentUserId();
         List<Resume> resumes = resumeService.listByUserId(userId);
@@ -42,8 +42,8 @@ public class ResumeTool {
         sb.append("简历列表：\n");
         for (Resume resume : resumes) {
             sb.append("- ID: ").append(resume.getId())
-              .append(", 标题: ").append(resume.getTitle())
-              .append(", 类型: ").append(resume.getFileType())
+              .append(", 文件名: ").append(resume.getFileName())
+              .append(", 状态: ").append(resume.getStatus() == 1 ? "已解析" : "待解析")
               .append("\n");
         }
         return sb.toString();
@@ -67,7 +67,7 @@ public class ResumeTool {
             return "无权访问此简历";
         }
 
-        return "简历标题: " + resume.getTitle() + "\n\n" +
-               "简历内容:\n" + (resume.getContent() != null ? resume.getContent() : "暂未解析");
+        return "简历文件名: " + resume.getFileName() + "\n\n" +
+               "简历内容:\n" + (resume.getRawText() != null ? resume.getRawText() : "暂未解析");
     }
 }
