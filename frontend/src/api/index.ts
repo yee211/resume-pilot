@@ -78,3 +78,10 @@ export function submitJd(resumeId: number, jdText: string) {
 export function getJdResult(id: number) {
   return api.get<Result<any>>(`/jd/${id}`)
 }
+
+// ========== 求职话术 ==========
+export function generateCareer(data: { resumeId: number; jobTitle?: string; company?: string }) {
+  return api.post<Result<any>>('/career/generate', data)
+}
+
+export default api
