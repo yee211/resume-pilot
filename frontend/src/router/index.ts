@@ -36,6 +36,21 @@ const router = createRouter({
       path: '/resume',
       name: 'Resume',
       component: () => import('../views/ResumeView.vue')
+    },
+    {
+      path: '/interview',
+      name: 'Interview',
+      component: () => import('../views/InterviewView.vue')
+    },
+    {
+      path: '/history',
+      name: 'History',
+      component: () => import('../views/HistoryView.vue')
+    },
+    {
+      path: '/career',
+      name: 'Career',
+      component: () => import('../views/CareerView.vue')
     }
   ]
 })

@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  # ==================== PostgreSQL + pgvector ====================
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: resumepilot-postgres
+    environment:
+      POSTGRES_DB: resumepilot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-123456}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/main/resources/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - resumepilot-net
+
+  # ==================== Redis ====================
+  redis:
+    image: redis:7-alpine
+    container_name: resumepilot-redis
+    command: redis-server --requirepass ${REDIS_PASSWORD:-123456}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-123456}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - resumepilot-net
+
+  # ==================== Backend (Spring Boot) ====================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: resumepilot-backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/resumepilot
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${DB_PASSWORD:-123456}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-123456}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      JWT_SECRET: ${JWT_SECRET:-ResumePilotSecretKey2026MustBeLongEnoughForHS256Algorithm}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - resumepilot-net
+
+  # ==================== Frontend (Vue3 + Nginx) ====================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    container_name: resumepilot-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - resumepilot-net
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  resumepilot-net:
+    driver: bridge

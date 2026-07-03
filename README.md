@@ -652,3 +652,58 @@ AI 产品风格。
 * Spring Boot 工程化能力
 
 代码结构要求清晰，可维护，可扩展，可作为个人简历核心项目。
+
+---
+
+# 十三、Docker 部署
+
+## 快速启动
+
+```bash
+# 1. 克隆项目
+git clone https://github.com/yee211/resume-pilot.git
+cd resume-pilot
+
+# 2. 配置环境变量
+cp .env.docker .env
+# 编辑 .env 填入真实配置（API Key、数据库密码等）
+
+# 3. 一键启动
+docker-compose up -d
+```
+
+## 访问地址
+
+| 服务 | 地址 |
+|------|------|
+| 前端页面 | http://localhost |
+| 后端 API | http://localhost:8080 |
+| PostgreSQL | localhost:5432 |
+| Redis | localhost:6379 |
+
+## 常用命令
+
+```bash
+# 查看日志
+docker-compose logs -f backend
+
+# 停止服务
+docker-compose down
+
+# 重新构建并启动
+docker-compose up -d --build
+
+# 进入容器
+docker exec -it resumepilot-backend sh
+```
+
+## 环境变量说明
+
+| 变量名 | 必填 | 说明 |
+|--------|------|------|
+| DB_PASSWORD | ✅ | PostgreSQL 密码 |
+| REDIS_PASSWORD | ✅ | Redis 密码 |
+| DEEPSEEK_API_KEY | ✅ | DeepSeek API Key |
+| JWT_SECRET | ✅ | JWT 签名密钥（至少 32 字符） |
+| MAIL_USERNAME | ❌ | 邮箱用户名（发验证码用） |
+| MAIL_PASSWORD | ❌ | 邮箱授权码 |

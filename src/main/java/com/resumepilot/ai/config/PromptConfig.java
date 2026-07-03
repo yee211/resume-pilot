@@ -51,6 +51,22 @@ public class PromptConfig {
     }
 
     /**
+     * 模拟面试的 Prompt 模板
+     */
+    @Bean("interviewPromptTemplate")
+    public PromptTemplate interviewPromptTemplate() throws IOException {
+        return loadTemplate("prompt/interview.md");
+    }
+
+    /**
+     * 求职话术的 Prompt 模板
+     */
+    @Bean("careerPromptTemplate")
+    public PromptTemplate careerPromptTemplate() throws IOException {
+        return loadTemplate("prompt/career.md");
+    }
+
+    /**
      * 通用：从 classpath 加载 .md 文件为 PromptTemplate
      */
     private PromptTemplate loadTemplate(String path) throws IOException {

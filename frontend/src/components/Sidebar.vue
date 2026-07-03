@@ -19,6 +19,15 @@
       <router-link to="/optimize" class="nav-item" :class="{ active: $route.path === '/optimize' }">
         <span class="icon">✨</span> 简历优化
       </router-link>
+      <router-link to="/interview" class="nav-item" :class="{ active: $route.path === '/interview' }">
+        <span class="icon">🎯</span> 模拟面试
+      </router-link>
+      <router-link to="/history" class="nav-item" :class="{ active: $route.path === '/history' }">
+        <span class="icon">📋</span> 历史记录
+      </router-link>
+      <router-link to="/career" class="nav-item" :class="{ active: $route.path === '/career' }">
+        <span class="icon">💼</span> 求职话术
+      </router-link>
     </nav>
     <!-- 用户信息 + 退出 -->
     <div class="user-area">
