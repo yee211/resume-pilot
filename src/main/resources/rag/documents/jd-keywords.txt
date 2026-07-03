@@ -1,0 +1,31 @@
+互联网公司Java后端常见JD关键词分类：
+
+技术栈关键词：
+- Java、Spring Boot、Spring MVC、Spring Cloud、MyBatis、MyBatis-Plus
+- MySQL、Redis、PostgreSQL、MongoDB、Elasticsearch
+- RabbitMQ、Kafka、RocketMQ
+- Docker、Kubernetes、Jenkins、GitLab CI
+- Nginx、Linux、Git、Maven、Gradle
+
+架构关键词：
+- 微服务架构、分布式系统、高并发、高可用
+- 分布式事务、分布式锁、分布式缓存
+- 服务治理、服务注册发现、API网关
+- 读写分离、分库分表、数据一致性
+
+能力关键词：
+- 系统设计、架构设计、性能优化
+- 代码审查、技术选型、技术方案
+- 团队协作、敏捷开发、需求分析
+- 问题排查、故障定位、日志分析
+
+项目关键词：
+- 用户量、日活、QPS、TPS
+- 秒杀系统、电商系统、支付系统
+- 推荐系统、搜索系统、消息系统
+- 数据中台、用户中台、营销中台
+
+软技能关键词：
+- 良好的沟通能力、团队协作能力
+- 较强的学习能力、自驱力
+- 责任心强、抗压能力

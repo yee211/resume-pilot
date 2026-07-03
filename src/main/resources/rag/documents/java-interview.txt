@@ -1,0 +1,36 @@
+Java后端面试高频知识点：
+
+1. Java基础
+- 集合框架：HashMap底层原理（数组+链表+红黑树）、ConcurrentHashMap分段锁
+- 并发编程：synchronized vs ReentrantLock、volatile原理、线程池参数（核心线程、最大线程、队列、拒绝策略）
+- JVM：内存模型（堆、栈、方法区）、GC算法（标记清除、复制、标记整理）、垃圾收集器（G1、ZGC）
+- 反射与动态代理：JDK动态代理 vs CGLIB
+
+2. Spring框架
+- IOC容器：Bean生命周期、循环依赖三级缓存
+- AOP：JDK动态代理 vs CGLIB代理
+- 事务：@Transactional传播级别、事务失效场景
+- Spring Boot：自动装配原理、Starter机制
+
+3. 数据库
+- MySQL索引：B+树原理、联合索引最左匹配、索引失效场景
+- 事务隔离级别：读未提交、读已提交、可重复读、串行化
+- 慢SQL优化：EXPLAIN分析、索引优化、分页优化
+- MyBatis：一级缓存、二级缓存、动态SQL
+
+4. Redis
+- 数据结构：String、Hash、List、Set、ZSet
+- 缓存问题：缓存穿透（布隆过滤器）、缓存击穿（互斥锁）、缓存雪崩（随机过期）
+- 持久化：RDB vs AOF
+- 分布式锁：Redisson实现、RedLock算法
+
+5. 分布式与微服务
+- CAP理论、BASE理论
+- 分布式事务：2PC、TCC、Saga、本地消息表
+- 消息队列：RabbitMQ、Kafka，消息可靠性保证
+- 服务治理：注册发现、负载均衡、熔断降级、限流
+
+6. 场景设计题
+- 秒杀系统：Redis预扣库存 + RabbitMQ异步下单 + 令牌桶限流
+- 短链接系统：分布式ID生成 + 302重定向 + 布隆过滤器去重
+- 消息推送：WebSocket长连接 + 消息表轮询
