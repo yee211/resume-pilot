@@ -105,6 +105,22 @@ public class KnowledgeService {
     }
 
     /**
+     * 搜索知识库
+     *
+     * @param query 搜索关键词
+     * @param maxResults 最大返回数量
+     * @return 相关文本片段列表
+     */
+    public List<String> search(String query, int maxResults) {
+        var queryEmbedding = embeddingModel.embed(query).content();
+        var results = embeddingStore.findRelevant(queryEmbedding, maxResults, 0.5);
+
+        return results.stream()
+                .map(match -> match.embedded().text())
+                .toList();
+    }
+
+    /**
      * 核心：文本 → 切片 → 向量化 → 存储
      */
     private void importText(String text, String source) {
